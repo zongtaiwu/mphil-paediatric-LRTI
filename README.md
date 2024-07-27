@@ -16,24 +16,24 @@
 
 ## R Scripts
 
-`01-generate_cv_folds.R` - Randomly splits the samples with 'Definite' or 'No Evidence' LRTI status, where we assume the ground-truth is known, into 5 folds for cross-validation.
-`02-RNAseq_DE_analysis.R` - Filters the host counts before differential expression analysis using DESeq2 and edgeR separately. Applies the variance stablizing transformations implemented in DESeq2 for LASSO logistic regression in 03.1.
-`03.1-host_lasso_cv.R` - Selects features for use in a host LRTI classifier for each train/test split using LASSO logistic regression. The selection procedure is applied to the key protein genes from protein network analysis. The same procedure is applied to all genes and validates the 14 genes selected by Mick et al. (2023) paper.
-`03.2-LR_classifier.R` - Trains a logistic regression classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The gene sets are 1) lasso results from key protein genes, 2) lasso results from all genes, and 3) all genes, and the same applies to the 03.3 to 03.6.
-`03.3-RF_classifier.R` - Trains a random forest classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
-`03.4-SVM_classifier.R` - Trains a support vector machine classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
-`03.5-KNN_classifier.R` - Trains a k-nearest neighbour classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
-`03.6-XGBoost_classifier.R` - Trains a eXtreme Gradient Boosting based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
-`03.7-classifier_metrics.R` - Generates and summarises classifier metrics from the LRTI probabilities and actual classification across all models. 
-`04.1-SPIA_analysis.R` - Conducts SPIA analysis on key protein genes and on differentially expressed genes (DEGs). The logFC values are obtained from DESeq2 or edgeR results.
-`04.2-SPIA_ranking.R` - Trains a logistic regression classifier based on genes in each SPIA pathways for each train/test split, and then generates out-of-fold LRTI probabilities. The F1 score is generated for each classifier, and pathways are ranked by the mean F1 score across all folds.
-`05.1-microbe_background_filtering.R` - Generates background filtering statistics on the microbial taxa using a negative binomial model trained on the water samples, as implemented in `idseqr.R`. [idseqr](https://github.com/czbiohub/idseqr) is a package for working with output from the CZ-ID pipeline in R that is currently in alpha stage.
-`05.2-microbe_DE_analysis.R` - Outputs microbial taxa present in patient samples after background filtering, with bacterial/fungal taxa identified as genus or top species within a genus. Conducts differential expression analysis using DESeq2 and edgeR separately.
-`06.1-microbe_DE_analysis.R`- Conducts Welch's two sample t-tests on individual microbial strains and plots bar charts.
-`06.2-microbe_correlation.R` - Conducts Kendall's tau correlation tests to find the bacterial/fungi species that have strong correlations to RSV.
+1. `01-generate_cv_folds.R` - Randomly splits the samples with 'Definite' or 'No Evidence' LRTI status, where we assume the ground-truth is known, into 5 folds for cross-validation.
+2. `02-RNAseq_DE_analysis.R` - Filters the host counts before differential expression analysis using DESeq2 and edgeR separately. Applies the variance stablizing transformations implemented in DESeq2 for LASSO logistic regression in 03.1.
+3. `03.1-host_lasso_cv.R` - Selects features for use in a host LRTI classifier for each train/test split using LASSO logistic regression. The selection procedure is applied to the key protein genes from protein network analysis. The same procedure is applied to all genes and validates the 14 genes selected by Mick et al. (2023) paper.
+4. `03.2-LR_classifier.R` - Trains a logistic regression classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The gene sets are 1) lasso results from key protein genes, 2) lasso results from all genes, and 3) all genes, and the same applies to the 03.3 to 03.6.
+5. `03.3-RF_classifier.R` - Trains a random forest classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
+6. `03.4-SVM_classifier.R` - Trains a support vector machine classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
+7. `03.5-KNN_classifier.R` - Trains a k-nearest neighbour classifier based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
+8. `03.6-XGBoost_classifier.R` - Trains a eXtreme Gradient Boosting based on each chosen gene set for each train/test split, and then generates out-of-fold LRTI probabilities. The hyperparameters of the model in each train/test split are tuned by an additional 5-fold cross-validation.
+9. `03.7-classifier_metrics.R` - Generates and summarises classifier metrics from the LRTI probabilities and actual classification across all models. 
+10. `04.1-SPIA_analysis.R` - Conducts SPIA analysis on key protein genes and on differentially expressed genes (DEGs). The logFC values are obtained from DESeq2 or edgeR results.
+11. `04.2-SPIA_ranking.R` - Trains a logistic regression classifier based on genes in each SPIA pathways for each train/test split, and then generates out-of-fold LRTI probabilities. The F1 score is generated for each classifier, and pathways are ranked by the mean F1 score across all folds.
+12. `05.1-microbe_background_filtering.R` - Generates background filtering statistics on the microbial taxa using a negative binomial model trained on the water samples, as implemented in `idseqr.R`. [idseqr](https://github.com/czbiohub/idseqr) is a package for working with output from the CZ-ID pipeline in R that is currently in alpha stage.
+13. `05.2-microbe_DE_analysis.R` - Outputs microbial taxa present in patient samples after background filtering, with bacterial/fungal taxa identified as genus or top species within a genus. Conducts differential expression analysis using DESeq2 and edgeR separately.
+14. `06.1-microbe_DE_analysis.R`- Conducts Welch's two sample t-tests on individual microbial strains and plots bar charts.
+15. `06.2-microbe_correlation.R` - Conducts Kendall's tau correlation tests to find the bacterial/fungi species that have strong correlations to RSV.
 
 ## Python Scripts
 
-`01_networkAnalysis_igraph.py` - Constructs protein-protein interaction network with shortest paths on STRING between all start/end protein combinations.
-`02_permutationTest_igraph.py` - Creates a random network from given network. Calculates empirical p-value of centrality analysis from permutation test and returns the key proteins
-`03_visualisation.py` - Generates plots using network topology and logFC of nodes. 
+1. `01_networkAnalysis_igraph.py` - Constructs protein-protein interaction network with shortest paths on STRING between all start/end protein combinations.
+2. `02_permutationTest_igraph.py` - Creates a random network from given network. Calculates empirical p-value of centrality analysis from permutation test and returns the key proteins
+3. `03_visualisation.py` - Generates plots using network topology and logFC of nodes. 
