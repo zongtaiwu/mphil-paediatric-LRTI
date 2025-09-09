@@ -249,6 +249,7 @@ col_diag <- col_no_rsv %>%
   rename(id = `RASCALS Study ID`) %>%
   select(id, true_diag = diag)
 
+# Remove duplicated samples
 bal_m_data_1 <- bal_m_data %>% 
   arrange(id)
 bal_m_data_1 <- bal_m_data_1[-c(13, 24, 65), ]
@@ -259,10 +260,15 @@ bal_model_data <- na.omit(bal_pred %>% full_join(col_diag, by = "id"))
 
 ratio_m_data_1 <- ratio_m_data %>% 
   arrange(id)
-ratio_m_data_1 <- ratio_m_data_1[-14, ]
+ratio_m_data_1 <- ratio_m_data_1[-c(14, 24), ]
 ratio_pred <- ratio_m_data_1 %>%
   select(id, blood_prediction = predicted_class_optimized)
 blood_model_data <- na.omit(ratio_pred %>% full_join(col_diag, by = "id"))
+
+
+table(Predicted = blood_model_data$blood_prediction,
+      Actual    = blood_model_data$true_diag)
+
 
 # Find those not included in the cytokine model
 a <- demo%>%filter(diag == "Non-LRTI")%>%select(`RASCALS Study ID`)
@@ -272,7 +278,7 @@ b <- demo%>%filter(diag == "LRTI")%>%filter(group == "Non-RSV")%>%select(`RASCAL
 setdiff(b$`RASCALS Study ID`, blood_model_data$id)
 
 
-# 6. Visualize the chosen threshold on the ROC curve
+# 6. Visualize the chosen threshold on the ROC curve (without RSV)
 plot(roc_obj, col = "#1c61b6", lwd = 2)
 
 # Plot the point corresponding to the closest-to-top-left threshold
